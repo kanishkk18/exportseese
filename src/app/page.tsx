@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { 
-    ArrowRight, 
-    Box, 
+    ArrowRight,  
     Shield, 
     Zap, 
     Code2, 
@@ -15,19 +14,11 @@ import {
   import TextGenerationEffect from "@/components/ui/text-generation-effect";
   import Footer from "@/components/ui/footer"
   import TopNavbar from "@/components/ui/TopNavbar";
-  import Link from "next/link";
   import HeroVideoDialog from "@/components/ui/HeroVideoDialog";
-  import { useRouter } from "next/navigation";
 
   
 const HomePage = () => {
-  const [openIndex, setOpenIndex] = useState(null);
-  const router = useRouter();
 
-  const handleSignIn = () => {
-    const signInUrl = process.env.CUSTOM_SIGN_URL || "/https://exporteese.vercel.app/";
-    router.push(signInUrl); // Navigates to the sign-in page
-  };
 
  const projects = [
     {
@@ -270,7 +261,7 @@ const HomePage = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-6">
-                <p className="text-gray-300 mb-4">"{testimonial.quote}"</p>
+                <p className="text-gray-300 mb-4">{testimonial.quote}</p>
                 <p className="text-sm text-gray-400">{testimonial.author}</p>
               </div>
             </div>
@@ -281,8 +272,7 @@ const HomePage = () => {
     <div className="w-full  mx-auto px-16 text-center mt-10">
       <div className="flex flex-col text-center items-center space-y-3">
     <TextGenerationEffect
-  text="Exportesses Consulting Specialists PAN INDIA
-"
+  text="Exportesses Consulting Specialists PAN INDIA"
   className="text-lg font-semibold text-center"
   delay={50}
   animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
