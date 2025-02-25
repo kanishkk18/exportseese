@@ -208,29 +208,28 @@ const HomePage = () => {
     <section className="container mx-auto px-20 pb-32">
     <div className="flex flex-col my-16 text-center items-center space-y-3">
     <TextGenerationEffect
-  text="ONE OF THE LEADING BUSINESS CONSULTANTS IN INDIA
-"
-  className="text-lg font-semibold text-center"
-  delay={50}
-  animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
-  animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
-  easing="easeOutCubic"
-  threshold={0.2}
-  rootMargin="-50px"
-  onLetterAnimationComplete={handleAnimationComplete}
-/>
-    <TextGenerationEffect
-  text="Our business consulting services at a glance
-"
+text="ONE OF THE LEADING BUSINESS CONSULTANTS IN INDIA"
   className="text-3xl font-semibold text-center"
   delay={50}
-  animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
-  animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
-  easing="easeOutCubic"
+  animationFrom={{ opacity: 0, y: 50 }} // Changed to Framer Motion-friendly syntax
+  animationTo={{ opacity: 1, y: 0 }}
   threshold={0.2}
   rootMargin="-50px"
   onLetterAnimationComplete={handleAnimationComplete}
 />
+
+   
+<TextGenerationEffect
+  text="Our business consulting services at a glance"
+  className="text-3xl font-semibold text-center"
+  delay={50}
+  animationFrom={{ opacity: 0, y: 50 }} // Changed to Framer Motion-friendly syntax
+  animationTo={{ opacity: 1, y: 0 }}
+  threshold={0.2}
+  rootMargin="-50px"
+  onLetterAnimationComplete={handleAnimationComplete}
+/>
+
 </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
@@ -271,13 +270,13 @@ const HomePage = () => {
 
     <div className="w-full  mx-auto px-16 text-center mt-10">
       <div className="flex flex-col text-center items-center space-y-3">
+    
     <TextGenerationEffect
   text="Exportesses Consulting Specialists PAN INDIA"
   className="text-lg font-semibold text-center"
   delay={50}
-  animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
-  animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
-  easing="easeOutCubic"
+  animationFrom={{ opacity: 0, y: 50 }} // Changed to Framer Motion-friendly syntax
+  animationTo={{ opacity: 1, y: 0 }}
   threshold={0.2}
   rootMargin="-50px"
   onLetterAnimationComplete={handleAnimationComplete}
@@ -286,16 +285,15 @@ const HomePage = () => {
   text="Offered Services"
   className="text-3xl font-semibold text-center"
   delay={50}
-  animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
-  animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
-  easing="easeOutCubic"
+  animationFrom={{ opacity: 0, y: 50 }} // Changed to Framer Motion-friendly syntax
+  animationTo={{ opacity: 1, y: 0 }}
   threshold={0.2}
   rootMargin="-50px"
   onLetterAnimationComplete={handleAnimationComplete}
 />
 </div>
     
-      <HoverEffect items={projects} />
+      <HoverEffect items={projects} className="" />
     </div>
 
     <section className="container mx-auto px-4 pb-32 mt-6 text-center">

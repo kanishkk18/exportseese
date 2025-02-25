@@ -1,23 +1,23 @@
-import { useSprings, animated } from '@react-spring/web';
-import { useEffect, useRef, useState } from 'react';
+"use client";
+
+import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 const TextGenerationEffect = ({
-
-  text = '',
-  className = '',
+  text = "",
+  className = "",
   delay = 100,
-  animationFrom = { opacity: 0, transform: 'translate3d(0,40px,0)' },
-  animationTo = { opacity: 1, transform: 'translate3d(0,0,0)' },
-  easing = 'easeOutCubic',
+  animationFrom = { opacity: 0, y: 40 },
+  animationTo = { opacity: 1, y: 0 },
   threshold = 0.1,
-  rootMargin = '-100px',
-  textAlign = 'center',
+  rootMargin = "-100px",
+  textAlign = "center",
   onLetterAnimationComplete,
 }) => {
-  const words = text.split(' ').map(word => word.split(''));
+  const words = text.split(" ").map((word) => word.split(""));
   const letters = words.flat();
   const [inView, setInView] = useState(false);
-  const ref = useRef();
+  const ref = useRef(null);
   const animatedCount = useRef(0);
 
   useEffect(() => {
@@ -31,53 +31,56 @@ const TextGenerationEffect = ({
       { threshold, rootMargin }
     );
 
-    observer.observe(ref.current);
+    if (ref.current) observer.observe(ref.current);
 
     return () => observer.disconnect();
   }, [threshold, rootMargin]);
 
-  const springs = useSprings(
-    letters.length,
-    letters.map((_, i) => ({
-      from: animationFrom,
-      to: inView
-        ? async (next) => {
-          await next(animationTo);
-          animatedCount.current += 1;
-          if (animatedCount.current === letters.length && onLetterAnimationComplete) {
-            onLetterAnimationComplete();
-          }
-        }
-        : animationFrom,
-      delay: i * delay,
-      config: { easing },
-    }))
-  );
+  const letterVariants = {
+    hidden: animationFrom,
+    visible: (i) => ({
+      ...animationTo,
+      transition: {
+        delay: i * (delay / 1000),
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    }),
+  };
 
   return (
     <p
       ref={ref}
-      className={`split-parent overflow-hidden inline ${className}`}
-      style={{ textAlign, whiteSpace: 'normal', wordWrap: 'break-word' }}
+      className={`overflow-hidden inline ${className}`}
+      style={{ textAlign, whiteSpace: "normal", wordWrap: "break-word" }}
     >
       {words.map((word, wordIndex) => (
-        <span key={wordIndex} style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+        <span key={wordIndex} style={{ display: "inline-block", whiteSpace: "nowrap" }}>
           {word.map((letter, letterIndex) => {
             const index = words
               .slice(0, wordIndex)
               .reduce((acc, w) => acc + w.length, 0) + letterIndex;
 
             return (
-              <animated.span
+              <motion.span
                 key={index}
-                style={springs[index]}
-                className="inline-block transform transition-opacity will-change-transform"
+                custom={index}
+                variants={letterVariants}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                className="inline-block"
+                onAnimationComplete={() => {
+                  animatedCount.current += 1;
+                  if (animatedCount.current === letters.length && onLetterAnimationComplete) {
+                    onLetterAnimationComplete();
+                  }
+                }}
               >
                 {letter}
-              </animated.span>
+              </motion.span>
             );
           })}
-          <span style={{ display: 'inline-block', width: '0.3em' }}>&nbsp;</span>
+          <span style={{ display: "inline-block", width: "0.3em" }}>&nbsp;</span>
         </span>
       ))}
     </p>
